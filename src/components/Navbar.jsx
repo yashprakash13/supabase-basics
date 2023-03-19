@@ -28,7 +28,11 @@ const Navbar = () => {
       </div>
       {user && (
         <div className="flex justify-center py-2 px-4 items-center">
-          <div className="text-xl">Hello, you are logged in!</div>
+          <div className="text-xl">
+            Hey{" "}
+            <span className="font-bold ">{user.user_metadata.username}</span>,
+            welcome back!
+          </div>
         </div>
       )}
       <div className="flex py-2 px-4 justify-end items-center">

@@ -25,6 +25,16 @@ async function insertIntoUserprofileTable(id, username) {
     .eq("id", id)
   if (error) {
     console.log("Error in inserting username: => ", error)
+  } else {
+    // update user with username field
+    const { data, error } = await supabase.auth.updateUser({
+      data: { username: username },
+    })
+    if (error) {
+      console.log("Couldn't update user with username.")
+    } else {
+      console.log(data)
+    }
   }
 }
 
