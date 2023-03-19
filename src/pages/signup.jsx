@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import { useAuth } from "../contexts/auth"
+import { insertIntoUserprofileTable } from "../services/supabaseHelpers"
 
 const Signup = () => {
   const emailRef = useRef()
@@ -11,17 +12,22 @@ const Signup = () => {
   const { signUp } = useAuth()
   const navigate = useNavigate()
 
+  const location = useLocation()
+
   async function handleSignup(e) {
     e.preventDefault()
 
     const email = emailRef.current.value
     const password = passwordRef.current.value
 
-    const { error } = await signUp({ email, password })
+    const { data, error } = await signUp({ email, password })
 
     if (error) {
       alert("Error signing up: ", error)
     } else {
+      console.log("Inserting username...")
+      insertIntoUserprofileTable(data.user.id, location.state.username)
+      console.log("Done.")
       navigate("/dashboard")
     }
   }
@@ -39,7 +45,8 @@ const Signup = () => {
         onSubmit={handleSignup}
       >
         <h2 className="mb-4 text-center text-2xl font-bold text-gray-800 md:mb-8 lg:text-3xl">
-          Sign Up
+          Hello <span className="font-thin">{location.state.username}</span>,
+          signup here!
         </h2>
 
         <div className="mx-auto max-w-lg rounded-lg border">

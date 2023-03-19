@@ -41,12 +41,12 @@ const Navbar = () => {
           </div>
         ) : (
           <>
-            <div
+            {/* <div
               onClick={handleSignup}
               className="font-thin text-md cursor-pointer py-2 px-4 mr-4 w-fit bg-amber-700 text-white hover:underline hover:border-4 hover:border-orange-500 transition-all duration-300"
             >
               Signup
-            </div>
+            </div> */}
             <div
               onClick={handleLogin}
               className="font-thin text-md cursor-pointer py-2 px-4 w-fit bg-amber-700 text-white hover:underline hover:border-4 mr-4 hover:border-orange-500 transition-all duration-300"
