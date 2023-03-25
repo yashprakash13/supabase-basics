@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react"
+import React, { useRef, useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { useAuth } from "../contexts/auth"
 
@@ -11,6 +11,8 @@ const Login = () => {
   const { logIn } = useAuth()
   const navigate = useNavigate()
 
+  let [errorLogin, seterrorLogin] = useState("")
+
   async function handleLogIn(e) {
     e.preventDefault()
 
@@ -20,8 +22,10 @@ const Login = () => {
     const { error } = await logIn({ email, password })
 
     if (error) {
-      alert("Error logging in: ", error)
+      console.log(error)
+      seterrorLogin(error)
     } else {
+      seterrorLogin("")
       navigate("/dashboard")
     }
   }
@@ -45,6 +49,9 @@ const Login = () => {
         <div className="mx-auto max-w-lg rounded-lg border">
           <div className="flex flex-col gap-4 p-4 md:p-8">
             <div>
+              <div className="text-md text-red-600">{errorLogin.message}</div>
+            </div>
+            <div>
               <label
                 htmlFor="email"
                 className="mb-2 inline-block text-sm text-gray-800 sm:text-base"
@@ -55,6 +62,7 @@ const Login = () => {
                 name="email"
                 type="email"
                 ref={emailRef}
+                required
                 className="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring"
               />
             </div>
@@ -70,6 +78,7 @@ const Login = () => {
                 name="password"
                 ref={passwordRef}
                 type="password"
+                required
                 className="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring"
               />
             </div>
